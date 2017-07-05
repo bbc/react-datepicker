@@ -74,9 +74,9 @@ export default class DatePicker extends React.Component {
     tetherConstraints: PropTypes.array,
     title: PropTypes.string,
     todayButton: PropTypes.string,
-    weekLabel: PropTypes.string,
     utcOffset: PropTypes.number,
     value: PropTypes.string,
+    weekLabel: PropTypes.string,
     withPortal: PropTypes.bool
   }
 
