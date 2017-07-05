@@ -12,6 +12,7 @@ export default class Month extends React.Component {
     excludeDates: PropTypes.array,
     filterDate: PropTypes.func,
     fixedHeight: PropTypes.bool,
+    formatWeekNumber: PropTypes.func,
     highlightDates: PropTypes.array,
     includeDates: PropTypes.array,
     inline: PropTypes.bool,
@@ -69,6 +70,7 @@ export default class Month extends React.Component {
           month={this.props.day.month()}
           onDayClick={this.handleDayClick}
           onDayMouseEnter={this.handleDayMouseEnter}
+          formatWeekNumber={this.props.formatWeekNumber}
           minDate={this.props.minDate}
           maxDate={this.props.maxDate}
           excludeDates={this.props.excludeDates}
