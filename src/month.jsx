@@ -21,6 +21,7 @@ export default class Month extends React.Component {
     onDayClick: PropTypes.func,
     onDayMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
+    onWeekSelect: PropTypes.func,
     peekNextMonth: PropTypes.bool,
     preSelection: PropTypes.object,
     selected: PropTypes.object,
@@ -70,6 +71,7 @@ export default class Month extends React.Component {
           month={this.props.day.month()}
           onDayClick={this.handleDayClick}
           onDayMouseEnter={this.handleDayMouseEnter}
+          onWeekSelect={this.props.onWeekSelect}
           formatWeekNumber={this.props.formatWeekNumber}
           minDate={this.props.minDate}
           maxDate={this.props.maxDate}
