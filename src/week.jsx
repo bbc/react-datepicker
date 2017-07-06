@@ -43,7 +43,7 @@ export default class Week extends React.Component {
   }
 
   handleWeekClick = (day, weekNumber, event) => {
-    if (this.props.onWeekSelect) {
+    if (typeof this.props.onWeekSelect === 'function') {
       this.props.onWeekSelect(day, weekNumber, event)
     }
   }
@@ -60,15 +60,10 @@ export default class Week extends React.Component {
     const days = []
     const weekNumber = this.formatWeekNumber(startOfWeek)
     if (this.props.showWeekNumber) {
-      days.push(
-        <WeekNumber
-            key="W"
-            weekNumber={weekNumber}
-            onClick={this.props.onWeekSelect
-              ? this.handleWeekClick.bind(this, startOfWeek, weekNumber)
-              : undefined
-            } />
-      )
+      const onClickAction = this.props.onWeekSelect
+          ? this.handleWeekClick.bind(this, startOfWeek, weekNumber)
+          : undefined
+      days.push(<WeekNumber key="W" weekNumber={weekNumber} onClick={onClickAction} />)
     }
     return days.concat([0, 1, 2, 3, 4, 5, 6].map(offset => {
       const day = startOfWeek.clone().add(offset, 'days')
