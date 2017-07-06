@@ -3,7 +3,7 @@ import moment from 'moment'
 import Week from '../src/week'
 import WeekNumber from '../src/week_number'
 import Day from '../src/day'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 describe('Week', () => {
   it('should have the week CSS class', () => {
@@ -55,6 +55,44 @@ describe('Week', () => {
     const day = week.find(Day).at(0)
     day.simulate('click')
     assert(day.prop('day').isSame(dayClicked, 'day'))
+  })
+
+  it('should call the provided onWeekSelect function', () => {
+    let firstDayReceived = null
+    let weekNumberReceived = null
+
+    function onWeekClick (day, newWeekNumber) {
+      firstDayReceived = day.format()
+      weekNumberReceived = newWeekNumber
+    }
+
+    const weekStart = moment('2015-12-20')
+    const realWeekNumber = parseInt(weekStart.format('w'), 10)
+    const week = mount(
+      <Week day={weekStart} showWeekNumber onWeekSelect={onWeekClick} />
+    )
+    const weekNumberElement = week.find(WeekNumber)
+    weekNumberElement.simulate('click')
+    expect(firstDayReceived).to.equal(weekStart.format())
+    expect(weekNumberReceived).to.equal(realWeekNumber)
+  })
+
+  it('should set the week number with the provided formatWeekNumber function', () => {
+    let firstDayReceived = null
+
+    function weekNumberFormatter (day) {
+      firstDayReceived = day.format()
+      return 9
+    }
+
+    const weekStart = moment('2015-12-20')
+    const week = mount(
+      <Week day={weekStart} showWeekNumber formatWeekNumber={weekNumberFormatter} />
+    )
+    const weekNumberElement = week.find(WeekNumber)
+
+    expect(firstDayReceived).to.equal(weekStart.format())
+    expect(weekNumberElement.prop('weekNumber')).to.equal(9)
   })
 
   it('should call the provided onDayMouseEnter function', () => {
