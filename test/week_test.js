@@ -93,8 +93,8 @@ describe('Week', () => {
   it('should set the week number with the provided formatWeekNumber function', () => {
     let firstDayReceived = null
 
-    function weekNumberFormatter (day) {
-      firstDayReceived = day.format()
+    function weekNumberFormatter (newFirstWeekDay) {
+      firstDayReceived = newFirstWeekDay
       return 9
     }
 
@@ -104,7 +104,7 @@ describe('Week', () => {
     )
     const weekNumberElement = week.find(WeekNumber)
 
-    expect(firstDayReceived).to.equal(weekStart.format())
+    expect(firstDayReceived.isSame(weekStart)).to.be.true
     expect(weekNumberElement.prop('weekNumber')).to.equal(9)
   })
 
