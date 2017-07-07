@@ -3,7 +3,7 @@ import moment from 'moment'
 import Week from '../src/week'
 import WeekNumber from '../src/week_number'
 import Day from '../src/day'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 
 describe('Week', () => {
   it('should have the week CSS class', () => {
@@ -57,23 +57,36 @@ describe('Week', () => {
     assert(day.prop('day').isSame(dayClicked, 'day'))
   })
 
-  it('should call the provided onWeekSelect function', () => {
+  it('should call the provided onWeekSelect function and pass the first day of the week', () => {
     let firstDayReceived = null
-    let weekNumberReceived = null
 
-    function onWeekClick (day, newWeekNumber) {
-      firstDayReceived = day.format()
-      weekNumberReceived = newWeekNumber
+    function onWeekClick (newFirstWeekDay) {
+      firstDayReceived = newFirstWeekDay.format()
     }
 
     const weekStart = moment('2015-12-20')
-    const realWeekNumber = parseInt(weekStart.format('w'), 10)
-    const week = mount(
+    const week = shallow(
       <Week day={weekStart} showWeekNumber onWeekSelect={onWeekClick} />
     )
     const weekNumberElement = week.find(WeekNumber)
     weekNumberElement.simulate('click')
     expect(firstDayReceived).to.equal(weekStart.format())
+  })
+
+  it('should call the provided onWeekSelect function and pass the week number', () => {
+    let weekNumberReceived = null
+
+    function onWeekClick (unused, newWeekNumber) {
+      weekNumberReceived = newWeekNumber
+    }
+
+    const weekStart = moment('2015-12-20')
+    const realWeekNumber = parseInt(weekStart.format('w'), 10)
+    const week = shallow(
+      <Week day={weekStart} showWeekNumber onWeekSelect={onWeekClick} />
+    )
+    const weekNumberElement = week.find(WeekNumber)
+    weekNumberElement.simulate('click')
     expect(weekNumberReceived).to.equal(realWeekNumber)
   })
 
@@ -86,7 +99,7 @@ describe('Week', () => {
     }
 
     const weekStart = moment('2015-12-20')
-    const week = mount(
+    const week = shallow(
       <Week day={weekStart} showWeekNumber formatWeekNumber={weekNumberFormatter} />
     )
     const weekNumberElement = week.find(WeekNumber)
