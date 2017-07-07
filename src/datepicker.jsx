@@ -76,6 +76,7 @@ export default class DatePicker extends React.Component {
     tetherConstraints: PropTypes.array,
     title: PropTypes.string,
     todayButton: PropTypes.string,
+    useWeekdaysShort: PropTypes.bool,
     utcOffset: PropTypes.number,
     value: PropTypes.string,
     weekLabel: PropTypes.string,
@@ -355,6 +356,7 @@ export default class DatePicker extends React.Component {
         scrollableYearDropdown={this.props.scrollableYearDropdown}
         todayButton={this.props.todayButton}
         weekLabel={this.props.weekLabel}
+        useWeekdaysShort={this.props.useWeekdaysShort}
         utcOffset={this.props.utcOffset}
         outsideClickIgnoreClass={outsideClickIgnoreClass}
         fixedHeight={this.props.fixedHeight}
